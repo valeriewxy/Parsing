@@ -6,6 +6,7 @@ typedef struct *RDParser
 }RDP;
 
 extern RDP RDP_new(char* input, int length);
+extern void RDP_free(RDP rdp);
 extern char lookAhead(RDP rdp);
 extern bool matchTerminal(RDP rdp, char x);
 extern TREE E(RDP rdp);

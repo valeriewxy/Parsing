@@ -11,5 +11,6 @@ struct Node {
 extern Node Node_new();
 extern void Tree_free(Tree tree );
 extern Node Tree_getLeftmostChild(Tree root);
+extern void Tree_print(Tree tree);
 
 #endif
