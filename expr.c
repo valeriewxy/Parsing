@@ -15,7 +15,6 @@ int main(int argc, char const *argv[])
 	RDP rdp;
 	while(cont) {
 		input = (char*)malloc(sizeof(char)*10);
-		// char eof;
 		scanf("%s", input);
 		if (*input == 'q') {
 			cont = false;
