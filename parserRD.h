@@ -4,19 +4,20 @@ typedef struct *RDParser
 {
 	Tree tree;
 	int current;
+	int length;
 }RDP;
 
 extern RDP RDP_new(char* input, int length);
 extern void RDP_free(RDP rdp);
-extern char lookAhead(RDP rdp, char c);
-extern bool matchTerminal(RDP rdp, char x);
-extern TREE E(RDP rdp);
-extern TREE TT(RDP rdp);
-extern TREE T(RDP rdp);
-extern TREE FT(RDP rdp);
-extern TREE F(RDP rdp);
-extern TREE N(RDP rdp);
-extern TREE NT(RDP rdp);
-extern TREE D(RDP rdp);
+extern bool lookAhead(char c);
+extern bool matchTerminal(char x);
+extern Tree E(RDP rdp);
+extern Tree TT(RDP rdp);
+extern Tree T(RDP rdp);
+extern Tree FT(RDP rdp);
+extern Tree F(RDP rdp);
+extern Tree N(RDP rdp);
+extern Tree NT(RDP rdp);
+extern Tree D(RDP rdp);
 
 #endif

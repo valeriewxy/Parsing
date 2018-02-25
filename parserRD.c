@@ -18,47 +18,153 @@ void RDP_free(RDP rdp) {
 	free(rdp);
 }
 
-char lookAhead(RDP rdp, char c) {
+bool lookAhead(char c) {
+	return *nextInputChar == c; 
+}
+
+bool matchTerminal(char x) {
 	if (*nextInputChar == c) {
 		nextInputChar++:
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
-bool matchTerminal(RDP rdp, char x) {
-
+Tree E() {
+	Tree e = Tree_new('E');
+	Tree t = T();
+	if (t != NULL)
+		return NULL;
+	Tree tt = TT();
+	if (tt != NULL)
+		return NULL;	
+	Tree_addChild(e, t);
+	Tree_addChild(e, tt);
+	return e;
 }
 
-TREE E(RDP rdp) {
-
+Tree TT() {
+	Tree tt = Tree_new('TT');
+	char c;
+	if (!(lookAhead('+') || lookAhead('-'))) {
+		Tree_addChild(tt, Tree_new('e'));
+	} else {
+		if (lookAhead('+')) 
+			c = '+';
+		else if (lookAhead('-'))
+			c = '-';
+		if (!matchTerminal('+') && !matchTerminal('-')) return NULL;
+		Tree t = T();
+		if (t = NULL) return NULL;
+		Tree tt2 = TT();
+		if (tt2 == NULL) return NULL;
+		Tree_addChild(tt, Tree_new(c));
+		Tree_addChild(tt, t);
+		Tree_addChild(tt, tt2);
+	}
+	return tt;
 }
 
-TREE TT(RDP rdp) {
-
+Tree T() {
+	Tree t = Tree_new('T');
+	Tree f = F();
+	if (f != NULL)
+		return NULL;
+	Tree ft = FT();
+	if (ft != NULL)
+		return NULL;	
+	Tree_addChild(t, f);
+	Tree_addChild(t, ft);
+	return t;
 }
 
-TREE T(RDP rdp) {
-
+Tree FT() {
+	Tree ft = Tree_new('FT');
+	char c;
+	if (!(lookAhead('*') || lookAhead('/'))) {
+		Tree_addChild(ft, Tree_new('e'));
+	} else {
+		if (lookAhead('*')) 
+			c = '*';
+		else if (lookAhead('/'))
+			c = '/';
+		if (!matchTerminal('*') && !matchTerminal('/')) return NULL;
+		Tree f = F();
+		if (f = NULL) return NULL;
+		Tree ft2 = FT();
+		if (ft2 == NULL) return NULL;
+		Tree_addChild(ft, Tree_new(c));
+		Tree_addChild(ft, f);
+		Tree_addChild(ft, ft2);
+	}
+	return ft;
 }
 
-TREE FT(RDP rdp) {
-
+Tree F() {
+	Tree f = Tree_new('F');
+	if (!lookAhead('(')) {
+		Tree n = N();
+		if (n = NULL) return NULL;
+		Tree_addChild(f, n);
+	} else {
+		if (!matchTerminal('(')) return NULL;
+		Tree e = E();
+		if (e == NULL) return NULL;
+		if (!matchTerminal(')')) return NULL;
+		Tree_addChild(f, Tree_new('('));
+		Tree_addChild(f, e);
+		Tree_addChild(f, Tree_new(')'));
+	}
+	return f;
 }
 
-TREE F(RDP rdp) {
-
+Tree N() {
+	Tree n = Tree_new('N');
+	Tree d = D();
+	if (d != NULL)
+		return NULL;
+	Tree nt = NT();
+	if (nt != NULL)
+		return NULL;	
+	Tree_addChild(n, d);
+	Tree_addChild(n, nt);
+	return n;
 }
 
-TREE N(RDP rdp) {
-
+Tree NT() {
+	Tree nt = Tree_new('NT');
+	bool boolean = false;
+	for (int i=0; i<9; i++) {
+		if (lookAhead(i)) {
+			boolean = true;
+			break;
+		}
+	}
+	if (boolean) {
+		Tree n = N();
+		if (n == NULL) return NULL;
+		Tree_addChild(nt, n);
+	} else {
+		Tree_addChild(nt, Tree_new('e'));
+	}
+	return nt;
 }
 
-TREE NT(RDP rdp) {
-
-}
-
-TREE D(RDP rdp) {
+Tree D() {
+	Tree d = Tree_new('D');
+	bool boolean = false;
+	int i=0;
+	for (; i<9; i++) {
+		if (lookAhead(i)) {
+			boolean = true;
+			break;
+		}
+	}
+	if (boolean==true && matchTerminal(i)) {
+		Tree_addChild(d, Tree_new(i));
+		return d;
+	} else {
+		return NULL;
+	}
 
 }

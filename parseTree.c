@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
-#include "parsetree.h"
+#include "parseTree.h"
 
 Tree Tree_new(char c) {
 	Tree tree = (Tree)malloc(sizeof(struct Node));
@@ -23,6 +22,70 @@ void Tree_free(Tree tree ) {
 	}
 }
 
+Tree Tree_addSibling(Tree tree, Tree sibl) {
+	if (tree == NULL) {
+		return NULL;
+	}
+	while (tree->rightSibiling != NULL) {
+		tree = tree->rightSibiling;
+	}
+	// tree->rightSibiling = Tree_new(data);
+	tree->rightSibiling = sibl;
+	return tree->rightSibiling;
+}
+
+Tree Tree_addChild(Tree tree, Tree chil) {
+	if (tree == NULL) {
+		return NULL;
+	}
+	if (tree->leftmostChild == NULL) {
+		// tree->leftmostChild = Tree_new(data);
+		tree->leftmostChild = chil;
+		return tree->leftmostChild;
+	} else {
+		return Tree_addSibling(tree->leftmostChild, chil);
+	}
+}
+
+bool isTerminal(char c) {
+	switch (c){
+		case '0':
+			return true;
+		case '1':
+			return true;
+		case '2':
+			return true;
+		case '3':
+			return true;
+		case '4':
+			return true;
+		case '5':
+			return true;
+		case '6':
+			return true;
+		case '7':
+			return true;
+		case '8':
+			return true;
+		case '9':
+			return true;
+		case '+':
+			return true;
+		case '-':
+			return true;
+		case '*':
+			return true;
+		case '/':
+			return true;
+		case '(':
+			return true;
+		case ')':
+			return true;
+			break;
+	}
+	return false;
+}
+
 Tree Tree_getLeftmostLeaf(Tree root) {
 	if (root->leftmostChild != NULL) {
 		Tree temp = Tree_getLeftmostLeaf(root->leftmostChild);
@@ -34,12 +97,29 @@ Tree Tree_getLeftmostLeaf(Tree root) {
 			return temp;
 		}
 	}
-	if (root->data != NULL) {
+	if (isTerminal(root->data)) {
 		return root;
 	}
 	return NULL;
 }
 
-void Tree_print(Tree tree) {
+void Tree_indent(Tree root, int indent) {
+	if (root == NULL) {
+		return;
+	}
+	for(int i=1; i<=indent; i++) {
+		printf("    ");
+	}
+	printf("%s\n", root->data);
+	if (root->leftmostChild != NULL) {
+		Tree_indent(tree->leftmostChild, indent++);
+	}
+	if (root->rightSibiling != NULL) {
+		Tree_indent(tree->rightSibiling, indent);
+	}
+}
 
+void Tree_print(Tree root) {
+	Tree_indent(root, 0);
+	printf("\n");
 }
