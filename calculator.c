@@ -17,10 +17,34 @@ bool isOperator(char c) {
 	return false;
 }
 
-int evaluation(Tree tree) {
+int evaluation_tree(Tree tree) {
+	if (tree->data == 'E') {
 
+	}
+	else if (tree->data == 't') {
+
+	}
+	else if (tree->data == 'T') {
+
+	}
+	else if (tree->data == 'f') {
+
+	}
+	else if (tree->data == 'F') {
+
+	} 
+	else if (tree->data == 'N') {
+
+	}
+	else if (tree->data == 'n') {
+
+	}
+	else if (tree->data == 'D') {
+		
+	}
+	
 }
 
-int evaluation_sub(Tree tree) {
-	
+int evaluation(Tree tree) {
+
 }

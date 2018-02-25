@@ -5,5 +5,5 @@
 
 extern bool isOperand(char c);
 extern bool isOperator(char c);
+extern int evaluation_tree(Tree tree);
 extern int evaluation(Tree tree);
-extern int evaluation_sub(Tree tree);
