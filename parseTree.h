@@ -8,9 +8,9 @@ struct Node {
 	char data;
 };
 
-extern Node Node_new();
+extern Tree Tree_new();
 extern void Tree_free(Tree tree );
-extern Node Tree_getLeftmostChild(Tree root);
+extern Tree Tree_getLeftmostLeaf(Tree root);
 extern void Tree_print(Tree tree);
 
 #endif
