@@ -1,11 +1,14 @@
+#ifndef _parsetree_h
+#define _parsetree_h
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct *Node Tree;
+typedef struct Node* Tree;
 struct Node {
-	Node leftmostChild;
-	Node rightSibling;
+	Tree leftmostChild;
+	Tree rightSibling;
 	char data;
 };
 

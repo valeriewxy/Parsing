@@ -6,19 +6,20 @@
 Tree Tree_new(char c) {
 	Tree tree = (Tree)malloc(sizeof(struct Node));
 	tree->leftmostChild = NULL;
-	tree->rightSibiling = NULL;
-	data = c;
+	tree->rightSibling = NULL;
+	tree->data = c;
+	return tree;
 }
 
 void Tree_free(Tree tree ) {
-	if (tree->leftmostChild == NULL && tree->rightSibiling == NULL) {
+	if (tree->leftmostChild == NULL && tree->rightSibling == NULL) {
 		free(tree);
 	}
 	if (tree->leftmostChild != NULL) {
 		Tree_free(tree->leftmostChild);
 	} 
-	if (tree->rightSibiling != NULL) {
-		Tree_free(tree->rightSibiling);
+	if (tree->rightSibling != NULL) {
+		Tree_free(tree->rightSibling);
 	}
 }
 
@@ -26,12 +27,12 @@ Tree Tree_addSibling(Tree tree, Tree sibl) {
 	if (tree == NULL) {
 		return NULL;
 	}
-	while (tree->rightSibiling != NULL) {
-		tree = tree->rightSibiling;
+	while (tree->rightSibling != NULL) {
+		tree = tree->rightSibling;
 	}
 	// tree->rightSibiling = Tree_new(data);
-	tree->rightSibiling = sibl;
-	return tree->rightSibiling;
+	tree->rightSibling = sibl;
+	return tree->rightSibling;
 }
 
 Tree Tree_addChild(Tree tree, Tree chil) {
@@ -91,9 +92,9 @@ Tree Tree_getLeftmostLeaf(Tree root) {
 		Tree temp = Tree_getLeftmostLeaf(root->leftmostChild);
 		return temp;
 	}
-	if (root->rightSibiling != NULL) {
-		if (root->rightSibiling->leftmostChild != NULL) {
-			Tree temp = Tree_getLeftmostLeaf(root->rightSibiling->leftmostChild);
+	if (root->rightSibling != NULL) {
+		if (root->rightSibling->leftmostChild != NULL) {
+			Tree temp = Tree_getLeftmostLeaf(root->rightSibling->leftmostChild);
 			return temp;
 		}
 	}
@@ -110,12 +111,12 @@ void Tree_indent(Tree root, int indent) {
 	for(int i=1; i<=indent; i++) {
 		printf("    ");
 	}
-	printf("%s\n", root->data);
+	printf("%c\n", root->data);
 	if (root->leftmostChild != NULL) {
-		Tree_indent(tree->leftmostChild, indent++);
+		Tree_indent(root->leftmostChild, indent++);
 	}
-	if (root->rightSibiling != NULL) {
-		Tree_indent(tree->rightSibiling, indent);
+	if (root->rightSibling != NULL) {
+		Tree_indent(root->rightSibling, indent);
 	}
 }
 

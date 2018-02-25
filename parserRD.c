@@ -1,30 +1,35 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include "parseTree.h"
+#include "parserRD.h"
 
 char *nextInputChar;
 
 RDP RDP_new(char* input, int length) {
-	RDP rdp = (RDP)malloc(sizeof(struct RDParser));
+	RDP rdp = (RDP)malloc(sizeof(RDP));
 	nextInputChar = input;
 	rdp->current = 0;
-	rdp->tree = E(rdp);
+	rdp->tree = E();
 	return rdp;
 }
 
 void RDP_free(RDP rdp) {
-	if(rdp->tree != NULL) {
-		Tree_free(rdp->tree);
+	if (rdp != NULL) {
+		if(rdp->tree != NULL) {
+			Tree_free(rdp->tree);
+		}
+		free(rdp);
 	}
-	free(rdp);
 }
 
 bool lookAhead(char c) {
 	return *nextInputChar == c; 
 }
 
-bool matchTerminal(char x) {
+bool matchTerminal(char c) {
 	if (*nextInputChar == c) {
-		nextInputChar++:
+		nextInputChar++;
 		return true;
 	}
 	return false;
@@ -44,7 +49,7 @@ Tree E() {
 }
 
 Tree TT() {
-	Tree tt = Tree_new('TT');
+	Tree tt = Tree_new('t');
 	char c;
 	if (!(lookAhead('+') || lookAhead('-'))) {
 		Tree_addChild(tt, Tree_new('e'));
@@ -55,7 +60,7 @@ Tree TT() {
 			c = '-';
 		if (!matchTerminal('+') && !matchTerminal('-')) return NULL;
 		Tree t = T();
-		if (t = NULL) return NULL;
+		if (t == NULL) return NULL;
 		Tree tt2 = TT();
 		if (tt2 == NULL) return NULL;
 		Tree_addChild(tt, Tree_new(c));
@@ -79,7 +84,7 @@ Tree T() {
 }
 
 Tree FT() {
-	Tree ft = Tree_new('FT');
+	Tree ft = Tree_new('f');
 	char c;
 	if (!(lookAhead('*') || lookAhead('/'))) {
 		Tree_addChild(ft, Tree_new('e'));
@@ -90,7 +95,7 @@ Tree FT() {
 			c = '/';
 		if (!matchTerminal('*') && !matchTerminal('/')) return NULL;
 		Tree f = F();
-		if (f = NULL) return NULL;
+		if (f == NULL) return NULL;
 		Tree ft2 = FT();
 		if (ft2 == NULL) return NULL;
 		Tree_addChild(ft, Tree_new(c));
@@ -104,7 +109,7 @@ Tree F() {
 	Tree f = Tree_new('F');
 	if (!lookAhead('(')) {
 		Tree n = N();
-		if (n = NULL) return NULL;
+		if (n == NULL) return NULL;
 		Tree_addChild(f, n);
 	} else {
 		if (!matchTerminal('(')) return NULL;
@@ -132,7 +137,7 @@ Tree N() {
 }
 
 Tree NT() {
-	Tree nt = Tree_new('NT');
+	Tree nt = Tree_new('n');
 	bool boolean = false;
 	for (int i=0; i<9; i++) {
 		if (lookAhead(i)) {

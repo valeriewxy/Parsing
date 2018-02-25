@@ -1,11 +1,17 @@
+#ifndef _parserrd_h
+#define _parserrd_h
+
+#include <stdbool.h>
 #include "parseTree.h"
 
-typedef struct *RDParser
+typedef struct RDParser* RDP;
+
+struct RDParser
 {
 	Tree tree;
 	int current;
 	int length;
-}RDP;
+};
 
 extern RDP RDP_new(char* input, int length);
 extern void RDP_free(RDP rdp);
