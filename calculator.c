@@ -18,14 +18,16 @@ bool isOperator(char c) {
 }
 
 int evaluation_tree(Tree tree) {
+	char exp[128];
+	int result = 0;
 	if (tree->data == 'E') {
-
+		return evaluation_tree(tree->leftmostChild);
 	}
 	else if (tree->data == 't') {
-
+		return evaluation_tree()
 	}
 	else if (tree->data == 'T') {
-
+		return evaluation_tree(tree->leftmostChild);
 	}
 	else if (tree->data == 'f') {
 
@@ -40,8 +42,16 @@ int evaluation_tree(Tree tree) {
 
 	}
 	else if (tree->data == 'D') {
-		
+
 	}
+	else if (isOperand(tree->data)) {
+		int n = tree->data;
+		return n;
+	}
+	else if (isOperator(tree->data)) {
+
+	}
+	
 	
 }
 
