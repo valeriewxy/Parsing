@@ -98,6 +98,7 @@ Tree FT(RDP rdp) {
 	if (!(lookAhead(rdp,'*') || lookAhead(rdp,'/'))) {
 		Tree_addChild(ft, Tree_new('e'));
 	} else {
+		printf("%s\n", "$$$$");
 		if (lookAhead(rdp,'*')) 
 			c = '*';
 		else if (lookAhead(rdp,'/'))
@@ -111,6 +112,7 @@ Tree FT(RDP rdp) {
 		if (ft2 == NULL) 
 			return NULL;
 		Tree_addChild(ft, Tree_new(c));
+		printf("%c%s\n", c, "$$$$");
 		Tree_addChild(ft, f);
 		Tree_addChild(ft, ft2);
 	}
@@ -157,14 +159,14 @@ Tree N(RDP rdp) {
 Tree NT(RDP rdp) {
 	// printf("%s\n", "NT");
 	Tree nt = Tree_new('n');
-	bool boolean = false;
-	for (int i=0; i<9; i++) {
-		if (lookAhead(rdp,i)) {
-			boolean = true;
-			break;
-		}
-	}
-	if (boolean) {
+	// bool boolean = false;
+	// for (int i=0; i<10; i++) {
+	// 	if (lookAhead(rdp,i)) {
+	// 		boolean = true;
+	// 		break;
+	// 	}
+	// }
+	if (*nextInputChar >= '0' && *nextInputChar <='9') {
 		Tree n = N(rdp);
 		if (n == NULL) 
 			return NULL;

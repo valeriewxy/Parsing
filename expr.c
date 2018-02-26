@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
 			printf("%s\n", "INVALID INPUT");
 		} else {
 			Tree_print(rdp->tree);
-			printf("Result: %f\n", evaluation(rdp->tree));
+			// printf("Result: %f\n", evaluation(rdp->tree));
 		}
 		printf("%s", "Please enter another expression to test, or enter 'q' to quit: ");
 	}

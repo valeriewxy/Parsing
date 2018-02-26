@@ -12,14 +12,17 @@ Tree Tree_new(char c) {
 }
 
 void Tree_free(Tree tree ) {
-	if (tree->leftmostChild == NULL && tree->rightSibling == NULL) {
-		free(tree);
-	}
-	if (tree->leftmostChild != NULL) {
-		Tree_free(tree->leftmostChild);
-	} 
-	if (tree->rightSibling != NULL) {
-		Tree_free(tree->rightSibling);
+	if (tree != NULL) {
+		if (tree->leftmostChild == NULL && tree->rightSibling == NULL) {
+			free(tree);
+			tree = NULL;
+		}
+		if (tree->leftmostChild != NULL) {
+			Tree_free(tree->leftmostChild);
+		} 
+		if (tree->rightSibling != NULL) {
+			Tree_free(tree->rightSibling);
+		}
 	}
 }
 
@@ -109,11 +112,11 @@ void Tree_indent(Tree root, int indent) {
 		return;
 	}
 	for(int i=1; i<=indent; i++) {
-		printf("    ");
+		printf("  ");
 	}
 	printf("%c\n", root->data);
 	if (root->leftmostChild != NULL) {
-		Tree_indent(root->leftmostChild, indent++);
+		Tree_indent(root->leftmostChild, indent+1);
 	}
 	if (root->rightSibling != NULL) {
 		Tree_indent(root->rightSibling, indent);
