@@ -7,7 +7,7 @@
 typedef struct TDParser* TDP;
 
 struct TDParser {
-	int parsingTable**;
+	// int parsingTable**;
 	Tree tree;
 	int current;
 	int length;	

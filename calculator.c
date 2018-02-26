@@ -25,8 +25,8 @@ bool isOperator(char c) {
 double combine (double a, double b) {
 	char exp[128];
 	double n;
-	sprintf(exp, "%d %d", double a, double b);
-	sscanf(exp, "%d", &n);
+	sprintf(exp, "%f %f", double a, double b);
+	sscanf(exp, "%f", &n);
 	return n;
 }
 
@@ -95,6 +95,6 @@ double evaluation_tree(Tree tree) {
 	
 }
 
-int evaluation(Tree tree) {
+double evaluation(Tree tree) {
 	evaluation_tree(tree->leftmostChild);
 }
