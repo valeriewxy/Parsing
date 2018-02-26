@@ -6,7 +6,7 @@
 #include "parserTD.h"
 
 char *nextInputChar;
-
+Tree* stack;
 int top = -1;
 int parseTable[][] = {
   		// ( ) + - * / n \0
@@ -46,8 +46,9 @@ bool isEmpty() {
 TDP TDP_new(char* input, int length) {
 	TDP tdp = (TDP)malloc(sizeof(TDP));
 	nextInputChar = input;
+	Tree stack[10];
 	tdp->current = 0;
-	// tdp->tree = ;
+	tdp->tree = E(tdp);
 	tdp->length = length;
 	return tdp;
 }
