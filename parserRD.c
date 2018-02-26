@@ -30,15 +30,17 @@ bool lookAhead(RDP rdp, char c) {
 	return '\0';
 }
 
-bool matchTerminal(char c) {
+bool matchTerminal(RDP rdp, char c) {
 	if (*nextInputChar == c) {
 		nextInputChar++;
+		rdp->current++;
 		return true;
 	}
 	return false;
 }
 
 Tree E(RDP rdp) {
+	printf("%s\n", "E");
 	Tree e = Tree_new('E');
 	Tree t = T(rdp);
 	if (t == NULL)
@@ -52,6 +54,7 @@ Tree E(RDP rdp) {
 }
 
 Tree TT(RDP rdp) {
+	printf("%s\n", "TT");
 	Tree tt = Tree_new('t');
 	char c;
 	if (!(lookAhead(rdp,'+') || lookAhead(rdp,'-'))) {
@@ -61,7 +64,8 @@ Tree TT(RDP rdp) {
 			c = '+';
 		else if (lookAhead(rdp,'-'))
 			c = '-';
-		if (!matchTerminal('+') && !matchTerminal('-')) return NULL;
+		if (!matchTerminal(rdp, '+') && !matchTerminal(rdp, '-')) 
+			return NULL;
 		Tree t = T(rdp);
 		if (t == NULL) return NULL;
 		Tree tt2 = TT(rdp);
@@ -74,6 +78,7 @@ Tree TT(RDP rdp) {
 }
 
 Tree T(RDP rdp) {
+	printf("%s\n", "T");
 	Tree t = Tree_new('T');
 	Tree f = F(rdp);
 	if (f == NULL)
@@ -87,6 +92,7 @@ Tree T(RDP rdp) {
 }
 
 Tree FT(RDP rdp) {
+	printf("%s\n", "FT");
 	Tree ft = Tree_new('f');
 	char c;
 	if (!(lookAhead(rdp,'*') || lookAhead(rdp,'/'))) {
@@ -96,11 +102,13 @@ Tree FT(RDP rdp) {
 			c = '*';
 		else if (lookAhead(rdp,'/'))
 			c = '/';
-		if (!matchTerminal('*') && !matchTerminal('/')) return NULL;
+		if (!matchTerminal(rdp, '*') && !matchTerminal(rdp, '/')) return NULL;
 		Tree f = F(rdp);
-		if (f == NULL) return NULL;
+		if (f == NULL) 
+			return NULL;
 		Tree ft2 = FT(rdp);
-		if (ft2 == NULL) return NULL;
+		if (ft2 == NULL) 
+			return NULL;
 		Tree_addChild(ft, Tree_new(c));
 		Tree_addChild(ft, f);
 		Tree_addChild(ft, ft2);
@@ -109,16 +117,21 @@ Tree FT(RDP rdp) {
 }
 
 Tree F(RDP rdp) {
+	printf("%s\n", "F");
 	Tree f = Tree_new('F');
 	if (!lookAhead(rdp,'(')) {
 		Tree n = N(rdp);
-		if (n == NULL) return NULL;
+		if (n == NULL) 
+			return NULL;
 		Tree_addChild(f, n);
 	} else {
-		if (!matchTerminal('(')) return NULL;
+		if (!matchTerminal(rdp, '(')) 
+			return NULL;
 		Tree e = E(rdp);
-		if (e == NULL) return NULL;
-		if (!matchTerminal(')')) return NULL;
+		if (e == NULL) 
+			return NULL;
+		if (!matchTerminal(rdp, ')')) 
+			return NULL;
 		Tree_addChild(f, Tree_new('('));
 		Tree_addChild(f, e);
 		Tree_addChild(f, Tree_new(')'));
@@ -127,6 +140,7 @@ Tree F(RDP rdp) {
 }
 
 Tree N(RDP rdp) {
+	printf("%s\n", "N");
 	Tree n = Tree_new('N');
 	Tree d = D(rdp);
 	if (d == NULL)
@@ -140,6 +154,7 @@ Tree N(RDP rdp) {
 }
 
 Tree NT(RDP rdp) {
+	printf("%s\n", "NT");
 	Tree nt = Tree_new('n');
 	bool boolean = false;
 	for (int i=0; i<9; i++) {
@@ -150,7 +165,8 @@ Tree NT(RDP rdp) {
 	}
 	if (boolean) {
 		Tree n = N(rdp);
-		if (n == NULL) return NULL;
+		if (n == NULL) 
+			return NULL;
 		Tree_addChild(nt, n);
 	} else {
 		Tree_addChild(nt, Tree_new('e'));
@@ -159,20 +175,16 @@ Tree NT(RDP rdp) {
 }
 
 Tree D(RDP rdp) {
+	printf("%s\n", "D");
 	Tree d = Tree_new('D');
 	bool boolean = false;
 	int i=0;
 	for (; i<9; i++) {
 		if (lookAhead(rdp,i)) {
-			boolean = true;
-			break;
+			matchTerminal(rdp, i);
+			Tree_addChild(d, Tree_new(i));
+			return d;
 		}
 	}
-	if (boolean==true && matchTerminal(i)) {
-		Tree_addChild(d, Tree_new(i));
-		return d;
-	} else {
-		return NULL;
-	}
-
+	return NULL;
 }

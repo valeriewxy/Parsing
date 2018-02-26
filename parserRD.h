@@ -16,7 +16,7 @@ struct RDParser
 extern RDP RDP_new(char* input, int length);
 extern void RDP_free(RDP rdp);
 extern bool lookAhead(RDP rdp, char c);
-extern bool matchTerminal(char x);
+extern bool matchTerminal(RDP rdp, char x);
 extern Tree E(RDP rdp);
 extern Tree TT(RDP rdp);
 extern Tree T(RDP rdp);
