@@ -187,5 +187,6 @@ Tree D(RDP rdp) {
 			return d;
 		}
 	}
+	printf("%s\n", "&&&&&&");
 	return NULL;
 }
