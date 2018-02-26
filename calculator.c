@@ -32,44 +32,69 @@ double combine (double a, double b) {
 
 double evaluation_tree(Tree tree) {
 	// char exp[128];
-	double result = 0;
+	// double result = 0;
 	if (tree->data == 'E') {
 		return evaluation_tree(tree->leftmostChild);
 	}
 	else if (tree->data == 't') {
-		return evaluation_tree()
+		if (root->leftmostChild->label=='e'){
+			return 0;
+		} else {
+			double result;
+			if (n1->label=='+'){
+	        	result= evaluation_tree(tree->leftmostChild->rightSibling) + evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+			} else {
+				result= -evaluation_tree(tree->leftmostChild->rightSibling) -evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+			}
+			return result;
+		}
 	}
 	else if (tree->data == 'T') {
-		return evaluation_tree(tree->leftmostChild);
+		return evaluation_tree(tree->leftmostChild) * evaluation_tree(tree->leftmostChild->rightSibling);
 	}
 	else if (tree->data == 'f') {
-
+		if (tree->leftmostChild->data == 'e') {
+			return 1.0;
+		} else {
+			if (tree->leftmostChild->data == '*') {
+				return evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+			} else {
+				return 1/(evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling));
+			}
+		}
 	}
 	else if (tree->data == 'F') {
-
+		if (tree->leftmostChild->data == '(')
+			return evaluation_tree(tree->leftmostChild->rightSibling);
+		return evaluation_tree(tree->leftmostChild);
 	} 
 	else if (tree->data == 'N') {
-		return evaluation_tree(tree->leftmostChild);
+		return combine(evaluation_tree(tree->leftmostChild), evaluation_tree(tree->leftmostChild->rightSibling));
 	}
 	else if (tree->data == 'n') {
-		return evaluation_tree(tree->leftmostChild);
+		if (tree->rightSibling->leftmostChild->data == 'e') {
+			return 0;
+		} else {
+			return evaluation_tree(tree->leftmostChild);
+		}
 	}
 	else if (tree->data == 'D') {
-		if (tree->rightSibling->leftmostChild->data == 'e')
-			return evaluation_tree(tree->leftmostChild);
-		return combine(evaluation_tree(tree->leftmostChild, tree->rightSibling));
-	}
-	else if (isOperand(tree->data)) {
 		int n = tree->data;
 		return n;
+	} else {
+		return 0;
 	}
-	else if (isOperator(tree->data)) {
+	// else if (isOperand(tree->data)) {
+	// 	int n = tree->data;
+	// 	return n;
+	// }
+	// else if (isOperator(tree->data)) {
 
-	}
-	return result;
+	// }
+	// return result;
 	
 }
 
 int evaluation(Tree tree) {
-
+	evaluation_tree(tree->leftmostChild);
 }
