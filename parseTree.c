@@ -14,7 +14,7 @@ Tree Tree_new(char c) {
 void Tree_free(Tree tree ) {
 	if (tree != NULL) {
 		if (tree->leftmostChild == NULL && tree->rightSibling == NULL) {
-			free(tree);
+			free(tree); //segmentation fault
 			tree = NULL;
 		}
 		if (tree->leftmostChild != NULL) {
