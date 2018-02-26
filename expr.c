@@ -14,13 +14,13 @@ int main(int argc, char const *argv[])
 	char *input;
 	RDP rdp;
 	while(cont) {
-		input = (char*)malloc(sizeof(char)*10);
+		input = (char*)malloc(128);
 		scanf("%s", input);
 		if (*input == 'q') {
 			cont = false;
 			break;
 		}
-		rdp = RDP_new(input, sizeof(char)*10);
+		rdp = RDP_new(input, 128);
 		if (rdp->tree == NULL) {
 			printf("%s\n", "INVALID INPUT");
 		} else {
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 		}
 		printf("%s", "Please enter another expression to test, or enter 'q' to quit: ");
 	}
-	printf("%s\n", "Program Finished")
+	printf("%s\n", "Program Finished");
 	free(input);
 	RDP_free(rdp);
 }
