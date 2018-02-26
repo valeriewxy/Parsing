@@ -49,7 +49,7 @@ TDP TDP_new(char* input, int length) {
 	tdp->current = 0;
 	// tdp->tree = ;
 	tdp->length = length;
-	return rdp;
+	return tdp;
 }
 
 void TDP_free(TDP tdp) {
@@ -67,10 +67,18 @@ void TDP_free(TDP tdp) {
 	}
 }
 
-bool TD_lookAhead(TDP rdp, char c) {
-
+bool TD_lookAhead(TDP tdp, char c) {
+	if (tdp->current < tdp->length) {
+		return *nextInputChar == c; 
+	}
+	return '\0';
 }
 
-bool TD_matchTerminal(TDP rdp, char x) {
-
+bool TD_matchTerminal(TDP tdp, char x) {
+	if (*nextInputChar == x) {
+		nextInputChar++;
+		tdp->current++;
+		return true;
+	}
+	return false;
 }
