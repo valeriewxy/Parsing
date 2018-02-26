@@ -13,7 +13,6 @@ struct TDParser {
 	int length;	
 };
 
-extern Tree stack[10];
 extern void push(Tree tree);
 extern Tree peek();
 extern Tree pop();
