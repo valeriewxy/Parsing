@@ -13,10 +13,11 @@ struct TDParser {
 	int length;	
 };
 
-extern Tree* stack;
+extern Tree stack[10];
 extern void push(Tree tree);
 extern Tree peek();
 extern Tree pop();
+extern bool isEmpty();
 
 extern TDP TDP_new(char* input, int length);
 extern void TDP_free(TDP rdp);
