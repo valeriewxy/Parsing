@@ -10,6 +10,7 @@ RDP RDP_new(char* input, int length) {
 	RDP rdp = (RDP)malloc(sizeof(RDP));
 	nextInputChar = input;
 	rdp->current = 0;
+	rdp->length = length;
 	rdp->tree = E(rdp);
 	return rdp;
 }

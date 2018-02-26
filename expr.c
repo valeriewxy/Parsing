@@ -32,5 +32,5 @@ int main(int argc, char const *argv[])
 	}
 	printf("%s\n", "Program Finished");
 	free(input);
-	RDP_free(rdp);
+	RDP_free(rdp); //segmentation fault
 }

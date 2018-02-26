@@ -5,6 +5,8 @@
 #include "parseTree.h"
 #include "parserTD.h"
 
+char *nextInputChar;
+
 int top = -1;
 int parseTable[][] = {
   		// ( ) + - * / n \0
@@ -42,11 +44,27 @@ bool isEmpty() {
 }
 
 TDP TDP_new(char* input, int length) {
-
+	TDP tdp = (TDP)malloc(sizeof(TDP));
+	nextInputChar = input;
+	tdp->current = 0;
+	// tdp->tree = ;
+	tdp->length = length;
+	return rdp;
 }
 
-void TDP_free(TDP rdp) {
-
+void TDP_free(TDP tdp) {
+	for (int i=0; i<10; i++) {
+		if (stack[i] != NULL) {
+			Tree_free(stack[i]);
+		}
+	}
+	if (tdp != NULL) {
+		if (tdp->tree != NULL) {
+			Tree_free(tdp->tree);
+		}
+		free(tdp);
+		tdp = NULL;
+	}
 }
 
 bool TD_lookAhead(TDP rdp, char c) {
