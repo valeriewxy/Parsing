@@ -2,6 +2,7 @@
 #define _calculator_h
 
 #include <stdbool.h>
+#include "parseTree.h"
 
 extern bool isOperand(char c);
 extern bool isOperator(char c);

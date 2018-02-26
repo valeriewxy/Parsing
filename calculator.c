@@ -25,8 +25,8 @@ bool isOperator(char c) {
 double combine (double a, double b) {
 	char exp[128];
 	double n;
-	sprintf(exp, "%f %f", double a, double b);
-	sscanf(exp, "%f", &n);
+	sprintf(exp, "%f %f", a, b);
+	sscanf(exp, "%lf", &n);
 	return n;
 }
 
@@ -37,11 +37,11 @@ double evaluation_tree(Tree tree) {
 		return evaluation_tree(tree->leftmostChild);
 	}
 	else if (tree->data == 't') {
-		if (root->leftmostChild->label=='e'){
+		if (tree->leftmostChild->data=='e'){
 			return 0;
 		} else {
 			double result;
-			if (n1->label=='+'){
+			if (tree->leftmostChild->data=='+'){
 	        	result= evaluation_tree(tree->leftmostChild->rightSibling) + evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
 			} else {
 				result= -evaluation_tree(tree->leftmostChild->rightSibling) -evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
@@ -96,5 +96,5 @@ double evaluation_tree(Tree tree) {
 }
 
 double evaluation(Tree tree) {
-	evaluation_tree(tree->leftmostChild);
+	return evaluation_tree(tree->leftmostChild);
 }
