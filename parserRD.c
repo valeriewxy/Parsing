@@ -40,7 +40,7 @@ bool matchTerminal(RDP rdp, char c) {
 }
 
 Tree E(RDP rdp) {
-	printf("%s\n", "E");
+	// printf("%s\n", "E");
 	Tree e = Tree_new('E');
 	Tree t = T(rdp);
 	if (t == NULL)
@@ -54,7 +54,7 @@ Tree E(RDP rdp) {
 }
 
 Tree TT(RDP rdp) {
-	printf("%s\n", "TT");
+	// printf("%s\n", "TT");
 	Tree tt = Tree_new('t');
 	char c;
 	if (!(lookAhead(rdp,'+') || lookAhead(rdp,'-'))) {
@@ -78,7 +78,7 @@ Tree TT(RDP rdp) {
 }
 
 Tree T(RDP rdp) {
-	printf("%s\n", "T");
+	// printf("%s\n", "T");
 	Tree t = Tree_new('T');
 	Tree f = F(rdp);
 	if (f == NULL)
@@ -92,7 +92,7 @@ Tree T(RDP rdp) {
 }
 
 Tree FT(RDP rdp) {
-	printf("%s\n", "FT");
+	// printf("%s\n", "FT");
 	Tree ft = Tree_new('f');
 	char c;
 	if (!(lookAhead(rdp,'*') || lookAhead(rdp,'/'))) {
@@ -118,7 +118,7 @@ Tree FT(RDP rdp) {
 }
 
 Tree F(RDP rdp) {
-	printf("%s\n", "F");
+	// printf("%s\n", "F");
 	Tree f = Tree_new('F');
 	if (!lookAhead(rdp,'(')) {
 		Tree n = N(rdp);
@@ -141,7 +141,7 @@ Tree F(RDP rdp) {
 }
 
 Tree N(RDP rdp) {
-	printf("%s\n", "N");
+	// printf("%s\n", "N");
 	Tree n = Tree_new('N');
 	Tree d = D(rdp);
 	if (d == NULL)
@@ -155,7 +155,7 @@ Tree N(RDP rdp) {
 }
 
 Tree NT(RDP rdp) {
-	printf("%s\n", "NT");
+	// printf("%s\n", "NT");
 	Tree nt = Tree_new('n');
 	bool boolean = false;
 	for (int i=0; i<9; i++) {
@@ -176,17 +176,62 @@ Tree NT(RDP rdp) {
 }
 
 Tree D(RDP rdp) {
-	printf("%s\n", "D");
+	// printf("%s\n", "D");
 	Tree d = Tree_new('D');
-	int i=0;
-	for (; i<9; i++) {
-		char c = i;
-		if (lookAhead(rdp,c)) {
-			matchTerminal(rdp, c);
-			Tree_addChild(d, Tree_new(c));
-			return d;
-		}
+	// int i=0;
+	// for (; i<9; i++) {
+	// 	char c = i;
+	// 	if (lookAhead(rdp,c)) {
+	// 		matchTerminal(rdp, c);
+	// 		Tree_addChild(d, Tree_new(c));
+	// 		return d;
+	// 	}
+	// }
+
+	switch(*nextInputChar) {
+		case '0':
+			matchTerminal(rdp, '0');
+			Tree_addChild(d, Tree_new('0'));
+			break;
+		case '1':
+			matchTerminal(rdp, '1');
+			Tree_addChild(d, Tree_new('1'));
+			break;
+		case '2':
+			matchTerminal(rdp, '2');
+			Tree_addChild(d, Tree_new('2'));
+			break;
+		case '3':
+			matchTerminal(rdp, '3');
+			Tree_addChild(d, Tree_new('3'));
+			break;
+		case '4':
+			matchTerminal(rdp, '4');
+			Tree_addChild(d, Tree_new('4'));
+			break;
+		case '5':
+			matchTerminal(rdp, '5');
+			Tree_addChild(d, Tree_new('5'));
+			break;
+		case '6':
+			matchTerminal(rdp, '6');
+			Tree_addChild(d, Tree_new('6'));
+			break;
+		case '7':
+			matchTerminal(rdp, '7');
+			Tree_addChild(d, Tree_new('7'));
+			break;
+		case '8':
+			matchTerminal(rdp, '8');
+			Tree_addChild(d, Tree_new('8'));
+			break;
+		case '9':
+			matchTerminal(rdp, '9');
+			Tree_addChild(d, Tree_new('9'));
+			break;
+		default:
+			return NULL;
 	}
-	printf("%s\n", "&&&&&&");
-	return NULL;
+	// printf("%s\n", "&&&&&&");
+	return d;
 }
