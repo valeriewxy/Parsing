@@ -102,7 +102,8 @@ Tree FT(RDP rdp) {
 			c = '*';
 		else if (lookAhead(rdp,'/'))
 			c = '/';
-		if (!matchTerminal(rdp, '*') && !matchTerminal(rdp, '/')) return NULL;
+		if (!matchTerminal(rdp, '*') && !matchTerminal(rdp, '/')) 
+			return NULL;
 		Tree f = F(rdp);
 		if (f == NULL) 
 			return NULL;
@@ -177,12 +178,12 @@ Tree NT(RDP rdp) {
 Tree D(RDP rdp) {
 	printf("%s\n", "D");
 	Tree d = Tree_new('D');
-	bool boolean = false;
 	int i=0;
 	for (; i<9; i++) {
-		if (lookAhead(rdp,i)) {
-			matchTerminal(rdp, i);
-			Tree_addChild(d, Tree_new(i));
+		char c = i;
+		if (lookAhead(rdp,c)) {
+			matchTerminal(rdp, c);
+			Tree_addChild(d, Tree_new(c));
 			return d;
 		}
 	}
