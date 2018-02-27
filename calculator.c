@@ -10,51 +10,35 @@ bool isOperand(char c) {
 	return (c >= '0' && c <= '9');	
 }
 
-bool isOperator(char c) {
-	switch(c) {
-		case '+':
-		case '-':
-		case '*':
-		case '/':
-			return true;
-			break;
-	}
-	return false;
-}
-
 double combine (double a, double b) {
 	char exp[128];
 	double n;
 	sprintf(exp, "%.0f%.0f", a, b);
-	// printf("sprintf: %c %c\n", exp[0], exp[1]);
-	// sscanf(exp, "%lf", &n);
 	n = atof(exp);
 	printf("combine: %f\n", n);
 	return n;
 }
 
 double evaluation_tree(Tree tree) {
-	// char exp[128];
-	// double result = 0;
 	if (tree->data == 'E') {
 		printf("%s\n", "E");
 		return evaluation_tree(tree->leftmostChild);
 	}
-	else if (tree->data == 't') {
-		printf("%s\n", "t");
-		// if (tree->leftmostChild->data=='e'){
-		// 	return 0;
-		// } else {
-		// 	double result;
-		// 	if (tree->leftmostChild->data=='+'){
-	 //        	result= evaluation_tree(tree->leftmostChild->rightSibling)+evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
-		// 	} else {
-		// 		result= -evaluation_tree(tree->leftmostChild->rightSibling)-evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
-		// 	}
-		// 	return result;
-		// }
-		return 0;
-	}
+	// else if (tree->data == 't') {
+	// 	printf("%s\n", "t");
+	// 	// if (tree->leftmostChild->data=='e'){
+	// 	// 	return 0;
+	// 	// } else {
+	// 	// 	double result;
+	// 	// 	if (tree->leftmostChild->data=='+'){
+	//  //        	result= evaluation_tree(tree->leftmostChild->rightSibling)+evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+	// 	// 	} else {
+	// 	// 		result= -evaluation_tree(tree->leftmostChild->rightSibling)-evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+	// 	// 	}
+	// 	// 	return result;
+	// 	// }
+	// 	return 0;
+	// }
 	else if (tree->data == 'T') {
 		printf("%s\n", "T");
 		if (tree->rightSibling->leftmostChild->data == '+')
@@ -65,19 +49,19 @@ double evaluation_tree(Tree tree) {
 			return evaluation_tree(tree->leftmostChild);
 		// return evaluation_tree(tree->leftmostChild)*evaluation_tree(tree->leftmostChild->rightSibling);
 	}
-	else if (tree->data == 'f') {
-		printf("%s\n", "f");
-		// if (tree->leftmostChild->data == 'e') {
-		// 	return 1.0;
-		// } else {
-		// 	if (tree->leftmostChild->data == '*') {
-		// 		return evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
-		// 	} else {
-		// 		return 1/(evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling));
-		// 	}
-		// }
-		return 0;
-	}
+	// else if (tree->data == 'f') {
+	// 	printf("%s\n", "f");
+	// 	// if (tree->leftmostChild->data == 'e') {
+	// 	// 	return 1.0;
+	// 	// } else {
+	// 	// 	if (tree->leftmostChild->data == '*') {
+	// 	// 		return evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling);
+	// 	// 	} else {
+	// 	// 		return 1/(evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->leftmostChild->rightSibling->rightSibling));
+	// 	// 	}
+	// 	// }
+	// 	return 0;
+	// }
 	else if (tree->data == 'F') {
 		printf("%s\n", "F");
 		if (tree->leftmostChild->data == '(') {
@@ -166,17 +150,6 @@ double evaluation_tree(Tree tree) {
 		printf("%s%c\n", "else：", tree->data);
 		return 0;
 	}
-
-	
-	// else if (isOperand(tree->data)) {
-	// 	int n = tree->data;
-	// 	return n;
-	// }
-	// else if (isOperator(tree->data)) {
-
-	// }
-	// return result;
-	
 }
 
 double evaluation(Tree tree) {

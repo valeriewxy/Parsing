@@ -5,7 +5,6 @@
 #include "parseTree.h"
 
 extern bool isOperand(char c);
-extern bool isOperator(char c);
 extern double combine (double a, double b);
 extern double evaluation_tree(Tree tree);
 extern double evaluation(Tree tree);

@@ -235,6 +235,5 @@ Tree D(RDP rdp) {
 		default:
 			return NULL;
 	}
-	// printf("%s\n", "&&&&&&");
 	return d;
 }

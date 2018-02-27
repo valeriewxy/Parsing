@@ -9,7 +9,8 @@
 
 int main(int argc, char const *argv[])
 {
-	printf("%s\n", "------ Recursive-descent Parser ------");
+	printf("%s\n", ">>> Testing Part 1 & Part 3 >>>");
+	printf("%s\n", "------ Recursive-descent Parser with Calculator------");
 	bool cont = true;
 	printf("%s", "Please enter a line of expression: ");
 	char *input;
@@ -31,11 +32,11 @@ int main(int argc, char const *argv[])
 		}
 		printf("%s", "Please enter another expression to test, or enter 'q' to quit: ");
 	}
-	printf("%s\n", "Program Finished");
+	// printf("%s\n", "Program Finished");
 	free(input);
 	// RDP_free(rdp); //segmentation fault
 
-
+	// printf("%s\n", ">>> Testing Part 2 >>>");
 	// printf("%s\n", "------ Table-driven Parser ------");
 	// bool cont = true;
 	// printf("%s", "Please enter a line of expression: ");
