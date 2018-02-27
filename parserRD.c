@@ -182,7 +182,7 @@ Tree D(RDP rdp) {
 	// printf("%s\n", "D");
 	Tree d = Tree_new('D');
 	// int i=0;
-	// for (; i<9; i++) {
+	// for (; i<10; i++) {
 	// 	char c = i;
 	// 	if (lookAhead(rdp,c)) {
 	// 		matchTerminal(rdp, c);
