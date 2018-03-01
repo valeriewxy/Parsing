@@ -24,27 +24,25 @@ double evaluation_tree(Tree tree) {
 		printf("%s\n", "E");
 		return evaluation_tree(tree->leftmostChild);
 		///////////////////////////////
-		// if (tree->leftmostChild->rightSibling->leftmostChild->data == '+') {
-		// 	return evaluation_tree(tree->leftmostChild)+evaluation_tree(tree->leftmostChild->rightSibling);
-		// } else if (tree->leftmostChild->rightSibling->leftmostChild->data == '-') {
-		// 	return evaluation_tree(tree->leftmostChild)-evaluation_tree(tree->leftmostChild->rightSibling);
-		// } else  {
-		// 	return evaluation_tree(tree->leftmostChild);
-		// }
+		if (tree->leftmostChild->rightSibling->leftmostChild->data == '+') {
+			return evaluation_tree(tree->leftmostChild)+evaluation_tree(tree->leftmostChild->rightSibling);
+		} else if (tree->leftmostChild->rightSibling->leftmostChild->data == '-') {
+			return evaluation_tree(tree->leftmostChild)-evaluation_tree(tree->leftmostChild->rightSibling);
+		} else  {
+			return evaluation_tree(tree->leftmostChild);
+		}
 	}
 	// else if (tree->data == 't') {
 	// 	printf("%s\n", "t");
-	// 	if (tree->leftmostChild->data == '+') {
-	// 		return evaluation_tree(tree->leftmostChild->rightSibling)+evaluation_tree(tree->leftmostChild->rightSibling)
-	// 	}
 		
+	// 	return 0;
 	// }
 	else if (tree->data == 'T') {
 		printf("%s\n", "T");
-		if (tree->rightSibling->leftmostChild->data == '-')
-			return evaluation_tree(tree->leftmostChild)-evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
-		else if (tree->rightSibling->leftmostChild->data == '+')
+		if (tree->rightSibling->leftmostChild->data == '+')
 			return evaluation_tree(tree->leftmostChild)+evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
+		else if (tree->rightSibling->leftmostChild->data == '-')
+			return evaluation_tree(tree->leftmostChild)-evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
 		else
 			return evaluation_tree(tree->leftmostChild);
 		// return evaluation_tree(tree->leftmostChild)*evaluation_tree(tree->leftmostChild->rightSibling);
@@ -74,9 +72,8 @@ double evaluation_tree(Tree tree) {
 		} else {
 			if (tree->rightSibling->leftmostChild->data == '*')
 				return evaluation_tree(tree->leftmostChild)*evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
-			else if (tree->rightSibling->leftmostChild->data == '/'){
+			else if (tree->rightSibling->leftmostChild->data == '/')
 				return evaluation_tree(tree->leftmostChild)/evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
-			}
 			else
 				return evaluation_tree(tree->leftmostChild);
 		}
