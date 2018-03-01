@@ -8,16 +8,16 @@
 char *nextInputChar;
 Tree stack[20];
 int top = -1;
-int parseTable[8][17] = {
-  	   // ( ) + - * / n \0
-  /*E*/	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-  /*t*/	{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 4},
-  /*T*/	{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-  /*f*/	{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 6, 7},
-  /*F*/	{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 0, 0, 0, 0, 0},
-  /*N*/	{11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11},
-  /*n*/	{12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 0, 0, 0, 0, 0, 0},
-  /*D*/	{14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0}
+int parseTable[8][16] = {
+  	   //0  1  2  3  4  5  6  7  8  9  (  )  +  -  *  /  
+  /*E*/	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+  /*t*/	{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 4},
+  /*T*/	{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0},
+  /*f*/	{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 6, 7},
+  /*F*/	{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 0, 0, 0, 0, 0},
+  /*N*/	{11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 0, 0, 0, 0, 0, 0},
+  /*n*/	{12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13},
+  /*D*/	{14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 0, 0, 0, 0, 0}
 };
 
 int numSynCat(char c) {
@@ -65,20 +65,18 @@ int numInput(char c) {
 		return 8;
 	case '9':
 		return 9;
-	case 'e':
-		return 10;
 	case '(':
-		return 11;
+		return 10;
 	case ')':
-		return 12;
+		return 11;
 	case '+':
-		return 13;
+		return 12;
 	case '-':
-		return 14; 
+		return 13;
 	case '*':
-		return 15;
+		return 14; 
 	case '/':
-		return 16;
+		return 15;
     default:
     	return -1;
 	}
@@ -117,33 +115,46 @@ TDP TDP_new(char* input, int length) {
 	tdp->current = 0;
 	tdp->tree = Tree_new('E');
 	tdp->length = length;
-    TDP_buildStack(tdp);
+    if (!TDP_buildStack(tdp)) tdp->tree = NULL;
 	return tdp;
 }
 
-void TDP_buildStack(TDP tdp) {
+bool TDP_buildStack(TDP tdp) {
     push(Tree_new('E'));
     while(!isEmpty()) {
+    	if (TDP_lookAhead(tdp, '\0')) 
+    		return false;
         Tree out = pop();
         if(isTerminal(out->data)) {
-        	bool match = TDP_matchTerminal(tdp, out->data);
-        	if(!match) return;
+        	printf("%s%c\n", "consume ", out->data);
+        	if (TDP_matchTerminal(tdp, out->data)) 
+        		continue;
         }
         else {
-        	TDP_addProduction(tdp, out);
+        	printf("%s\n", "build stack non-term");
+        	if (TDP_addProduction(tdp, out)) 
+        		return true;
+        	return false;
         }
     }
+    if (!TDP_lookAhead(tdp, '\0')) 
+    	return false;
+    return true;
 }
 
-void TDP_addProduction(TDP tdp, Tree tree) {
-	int production = parseTable[numSynCat(tree->data)][numInput(*nextInputChar)];
+bool TDP_addProduction(TDP tdp, Tree tree) {
+	printf("Next char: %c\n", *nextInputChar);
+	int production;
 	if(numInput(*nextInputChar) == -1) {
     	production = 0;
   	}
-  	TDP_buildTree(tdp, production);
+	production = parseTable[numSynCat(tree->data)][numInput(*nextInputChar)];
+	printf("production: %d\n", production);
+  	if (TDP_buildTree(tdp, production) != NULL) return true;
+  	return false;
 }
 
-void TDP_buildTree(TDP tdp, int prod) {
+Tree TDP_buildTree(TDP tdp, int prod) {
 	Tree tree = Tree_getLeftmostNode(tdp->tree);
 	switch(prod) {
 	case 1:
@@ -174,7 +185,7 @@ void TDP_buildTree(TDP tdp, int prod) {
 	case 4:
 	case 8:
 	case 13:
-		push(Tree_new('e'));
+		// push(Tree_new('e'));
 		Tree_addChild(tree, Tree_new('e'));
 		printf("%s\n", "prod 4/8/13");
 		break;
@@ -274,13 +285,14 @@ void TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('9'));
 		printf("%s\n", "prod 23");
 		break;
-	case 0:
-		Tree_addChild(tree, Tree_new('e'));
-		// TDP->tree = NULL;
-		printf("%s\n", "prod 0");
-		break;
-	default: return;
+	// case 0:
+	// 	Tree_addChild(tree, Tree_new('e'));
+	// 	// TDP->tree = NULL;
+	// 	printf("%s\n", "prod 0");
+	// 	break;
+	default: return NULL;
 	}
+	return tree;
 }
 
 void TDP_free(TDP tdp) {
@@ -313,3 +325,5 @@ bool TDP_matchTerminal(TDP tdp, char x) {
 	}
 	return false;
 }
+
+

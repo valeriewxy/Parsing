@@ -17,7 +17,7 @@ extern void Tree_free(Tree tree );
 extern Tree Tree_addSibling(Tree tree, Tree sibl);
 extern Tree Tree_addChild(Tree tree, Tree chil);
 extern bool isTerminal(char c);
-extern Tree Tree_getLeftmostLeaf(Tree root);
+extern Tree Tree_getLeftmostNode(Tree root);
 extern void Tree_indent(Tree root, int indent);
 extern void Tree_print(Tree root);
 
