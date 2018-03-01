@@ -122,22 +122,25 @@ TDP TDP_new(char* input, int length) {
 bool TDP_buildStack(TDP tdp) {
     push(Tree_new('E'));
     while(!isEmpty()) {
+    	// printf("%s\n", "line 124");
     	if (TDP_lookAhead(tdp, '\0')) 
     		return false;
         Tree out = pop();
+        // printf("%s\n", "line 128");
         if(isTerminal(out->data)) {
-        	printf("%s%c\n", "consume ", out->data);
+        	// printf("%s\n", "line 130");
+        	// printf("%s%c\n", "consume ", out->data);
         	if (TDP_matchTerminal(tdp, out->data)) 
         		continue;
         }
         else {
-        	printf("%s\n", "build stack non-term");
-        	if (TDP_addProduction(tdp, out)) 
-        		return true;
+        	// printf("%s\n", "line 137");
+        	// printf("%s\n", "build stack non-term");
+        	if (!TDP_addProduction(tdp, out)) 
         	return false;
         }
     }
-    if (!TDP_lookAhead(tdp, '\0')) 
+    if (!TDP_lookAhead(tdp, '\0') ) 
     	return false;
     return true;
 }
@@ -150,19 +153,24 @@ bool TDP_addProduction(TDP tdp, Tree tree) {
   	}
 	production = parseTable[numSynCat(tree->data)][numInput(*nextInputChar)];
 	printf("production: %d\n", production);
-  	if (TDP_buildTree(tdp, production) != NULL) return true;
-  	return false;
+  	if (TDP_buildTree(tdp, production) == NULL) {
+  		printf("%s\n", "build fail");
+  		return false;
+  	}
+  	return true;
 }
 
 Tree TDP_buildTree(TDP tdp, int prod) {
 	Tree tree = Tree_getLeftmostNode(tdp->tree);
+
 	switch(prod) {
 	case 1:
 		push(Tree_new('t'));
 		push(Tree_new('T'));
+		// printf("%s\n", "push succeed");
 		Tree_addChild(tree, Tree_new('T'));
 		Tree_addChild(tree, Tree_new('t'));
-		printf("%s\n", "prod 1");
+		// printf("%s\n", "prod 1");
 		break;
 	case 2:
 		push(Tree_new('t'));
@@ -171,7 +179,7 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('+'));
 		Tree_addChild(tree, Tree_new('T'));
 		Tree_addChild(tree, Tree_new('t'));
-		printf("%s\n", "prod 2");
+		// printf("%s\n", "prod 2");
 		break;
 	case 3:
 		push(Tree_new('t'));
@@ -180,21 +188,22 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('-'));
 		Tree_addChild(tree, Tree_new('T'));
 		Tree_addChild(tree, Tree_new('t'));
-		printf("%s\n", "prod 3");
+		// printf("%s\n", "prod 3");
 		break;
 	case 4:
 	case 8:
 	case 13:
 		// push(Tree_new('e'));
 		Tree_addChild(tree, Tree_new('e'));
-		printf("%s\n", "prod 4/8/13");
+
+		// printf("%s\n", "prod 4/8/13");
 		break;
 	case 5:
 		push(Tree_new('f'));
 		push(Tree_new('F'));
 		Tree_addChild(tree, Tree_new('F'));
 		Tree_addChild(tree, Tree_new('f'));
-		printf("%s\n", "prod 5");
+		// printf("%s\n", "prod 5");
 		break;
 	case 6:
 		push(Tree_new('f'));
@@ -203,7 +212,7 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('*'));
 		Tree_addChild(tree, Tree_new('F'));
 		Tree_addChild(tree, Tree_new('f'));
-		printf("%s\n", "prod 6");
+		// printf("%s\n", "prod 6");
 		break;
 	case 7:
 		push(Tree_new('f'));
@@ -212,12 +221,12 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('/'));
 		Tree_addChild(tree, Tree_new('F'));
 		Tree_addChild(tree, Tree_new('f'));
-		printf("%s\n", "prod 7");
+		// printf("%s\n", "prod 7");
 	case 9:
 	case 12:
 		push(Tree_new('N'));
 		Tree_addChild(tree, Tree_new('N'));
-		printf("%s\n", "prod 9/12");
+		// printf("%s\n", "prod 9/12");
 		break;
 	case 10:
 		push(Tree_new(')'));
@@ -226,64 +235,64 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		Tree_addChild(tree, Tree_new('('));
 		Tree_addChild(tree, Tree_new('E'));
 		Tree_addChild(tree, Tree_new(')'));
-		printf("%s\n", "prod 10");
+		// printf("%s\n", "prod 10");
 		break;
 	case 11:
 		push(Tree_new('n'));
 		push(Tree_new('D'));
 		Tree_addChild(tree, Tree_new('D'));
-		Tree_addChild(tree, Tree_new('n'));
+		// Tree_addChild(tree, Tree_new('n'));
 		printf("%s\n", "prod 11");
 		break;
 	case 14:
 		push(Tree_new('0'));
 		Tree_addChild(tree, Tree_new('0'));
-		printf("%s\n", "prod 14");
+		// printf("%s\n", "prod 14");
 		break;
 	case 15:
 		push(Tree_new('1'));
 		Tree_addChild(tree, Tree_new('1'));
-		printf("%s\n", "prod 15");
+		// printf("%s\n", "prod 15");
 		break;
 	case 16:
 		push(Tree_new('2'));
 		Tree_addChild(tree, Tree_new('2'));
-		printf("%s\n", "prod 16");
+		// printf("%s\n", "prod 16");
 		break;
 	case 17:
 		push(Tree_new('3'));
 		Tree_addChild(tree, Tree_new('3'));
-		printf("%s\n", "prod 17");
+		// printf("%s\n", "prod 17");
 		break;
 	case 18:
 		push(Tree_new('4'));
 		Tree_addChild(tree, Tree_new('4'));
-		printf("%s\n", "prod 18");
+		// printf("%s\n", "prod 18");
 		break;
 	case 19:
 		push(Tree_new('5'));
 		Tree_addChild(tree, Tree_new('5'));
-		printf("%s\n", "prod 19");
+		// printf("%s\n", "prod 19");
 		break;
 	case 20:
 		push(Tree_new('6'));
 		Tree_addChild(tree, Tree_new('6'));
-		printf("%s\n", "prod 20");
+		// printf("%s\n", "prod 20");
 		break;
 	case 21:
 		push(Tree_new('7'));
 		Tree_addChild(tree, Tree_new('7'));
-		printf("%s\n", "prod 21");
+		// printf("%s\n", "prod 21");
 		break;
 	case 22:
 		push(Tree_new('8'));
 		Tree_addChild(tree, Tree_new('8'));
-		printf("%s\n", "prod 22");
+		// printf("%s\n", "prod 22");
 		break;
 	case 23:
 		push(Tree_new('9'));
 		Tree_addChild(tree, Tree_new('9'));
-		printf("%s\n", "prod 23");
+		// printf("%s\n", "prod 23");
 		break;
 	// case 0:
 	// 	Tree_addChild(tree, Tree_new('e'));
@@ -292,6 +301,8 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 	// 	break;
 	default: return NULL;
 	}
+	printf("%s\n", "build yeah");
+	
 	return tree;
 }
 
