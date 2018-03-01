@@ -90,19 +90,17 @@ bool isTerminal(char c) {
 	return false;
 }
 
-Tree Tree_getLeftmostLeaf(Tree root) {
-	if (root->leftmostChild != NULL) {
-		Tree temp = Tree_getLeftmostLeaf(root->leftmostChild);
+Tree Tree_getLeftmostNode(Tree root) {
+	if (root == NULL) return NULL;
+	if (root->leftmostChild == NULL && !isTerminal(root->data))
+		return root; 
+	if (!isTerminal(root->leftmostChild->data)) {
+		Tree temp = Tree_getLeftmostNode(root->leftmostChild);
 		return temp;
 	}
-	if (root->rightSibling != NULL) {
-		if (root->rightSibling->leftmostChild != NULL) {
-			Tree temp = Tree_getLeftmostLeaf(root->rightSibling->leftmostChild);
-			return temp;
-		}
-	}
-	if (isTerminal(root->data)) {
-		return root;
+	if (!isTerminal(root->rightSibling->leftmostChild->data)) {
+		Tree temp = Tree_getLeftmostNode(root->rightSibling->leftmostChild);
+		return temp;
 	}
 	return NULL;
 }
