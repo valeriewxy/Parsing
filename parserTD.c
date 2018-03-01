@@ -6,10 +6,10 @@
 #include "parserTD.h"
 
 char *nextInputChar;
-Tree stack[10];
+Tree stack[20];
 int top = -1;
 int parseTable[8][17] = {
-  		// ( ) + - * / n \0
+  	   // ( ) + - * / n \0
   /*E*/	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
   /*t*/	{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 4, 4},
   /*T*/	{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
@@ -85,7 +85,7 @@ int numInput(char c) {
 }
 
 void push(Tree tree) {
-	if (top < 9)
+	if (top < 19)
     	stack[++top] = tree;
 }
 
@@ -103,7 +103,7 @@ Tree pop() {
 }
 
 bool isEmpty() {
-	for(int i=0; i<=9; i++){
+	for(int i=0; i<=19; i++){
 	    if (stack[i] != NULL) {
 	      return false;
 	    }
@@ -112,7 +112,6 @@ bool isEmpty() {
 }
 
 TDP TDP_new(char* input, int length) {
-	printf("hhhhh\n");
 	TDP tdp = (TDP)malloc(sizeof(TDP));
 	nextInputChar = input;
 	tdp->current = 0;
@@ -145,7 +144,7 @@ void TDP_addProduction(TDP tdp, Tree tree) {
 }
 
 void TDP_buildTree(TDP tdp, int prod) {
-	Tree tree = Tree_getLeftmostLeaf(tdp->tree);
+	Tree tree = Tree_getLeftmostNode(tdp->tree);
 	switch(prod) {
 	case 1:
 		push(Tree_new('t'));
