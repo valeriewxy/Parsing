@@ -33,10 +33,10 @@ double evaluation_tree(Tree tree) {
 		// }
 	}
 	// else if (tree->data == 't') {
-	// 	printf("%s\n", "t");
-	// 	if (tree->leftmostChild->data == '+') {
-	// 		return evaluation_tree(tree->leftmostChild->rightSibling)+evaluation_tree(tree->leftmostChild->rightSibling)
-	// 	}
+		// printf("%s\n", "t");
+		// if (tree->leftmostChild->data == '+') {
+		// 	return evaluation_tree(tree->leftmostChild->rightSibling)+evaluation_tree(tree->leftmostChild->rightSibling)
+		// }
 		
 	// }
 	else if (tree->data == 'T') {
@@ -105,42 +105,32 @@ double evaluation_tree(Tree tree) {
 		// return n;
 	} 
 	else if (isOperand(tree->data)) {
-		printf("Operand: %c\n", tree->data);
+		// printf("Operand: %c\n", tree->data);
 		switch (tree->data) {
 			case '0':
 				return 0;
-				break;
 			case '1':
 				return 1;
-				break;
 			case '2':
 				return 2;
-				break;
 			case '3':
 				return 3;
-				break;
 			case '4':
 				return 4;
-				break;
 			case '5':
 				return 5;
-				break;
 			case '6':
 				return 6;
-				break;
 			case '7':
 				return 7;
-				break;
 			case '8':
 				return 8;
-				break;
 			default:
 				return 9;
-				break;
 		}
 	}
 	else {
-		printf("%s%c\n", "else：", tree->data);
+		// printf("%s%c\n", "else：", tree->data);
 		return 0;
 	}
 }
