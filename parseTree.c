@@ -85,6 +85,9 @@ bool isTerminal(char c) {
 			return true;
 		case ')':
 			return true;
+		case 'e':
+			return true;	
+		default:
 			break;
 	}
 	return false;
@@ -95,7 +98,7 @@ Tree Tree_getLeftmostNode(Tree root) {
 		printf("%s\n", "root null");
 		return NULL;
 	}
-	if (!isTerminal(root->data) && root->leftmostChild == NULL && root->data != 'e') 
+	if (!isTerminal(root->data) && root->leftmostChild == NULL) 
 		return root;
 	if (root->leftmostChild != NULL) {
 		Tree temp = Tree_getLeftmostNode(root->leftmostChild);
@@ -111,7 +114,6 @@ Tree Tree_getLeftmostNode(Tree root) {
 		}
 	// }
 	}
-	printf("%s\n", "return null");
 	return NULL;
 }
 

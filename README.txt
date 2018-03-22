@@ -5,7 +5,7 @@ CSC173 Project02
 -Xuanyang Wang (xwang145)
 -Meiwen Zhou (mzhou26)
 
-·Project Building:
+** Project Building:
 A makefile is included to help the project building.
 cd to the project directory and type the command:
 	
@@ -13,7 +13,8 @@ cd to the project directory and type the command:
 
 An executable file "expr" will be generated.
 
-·Instruction to run:
+
+** Instruction to run:
 To run the file after building it, type
 	
 	make run
@@ -34,3 +35,7 @@ some other commands to compile/run:
 	make run-clean
 
 
+** Some sample inputs:
+3+10*3-1 
+(10+10)*5-10
+10*20/10+2

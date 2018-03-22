@@ -119,12 +119,33 @@ TDP TDP_new(char* input, int length) {
 	return tdp;
 }
 
+bool clearStack(TDP tdp) {
+	while(!isEmpty()) {
+    	Tree temp = peek();
+   		if (isTerminal(temp->data)) {
+   			return false;
+   		} else {
+   			pop();
+   			// printf("%s\n", "1111");
+   			Tree temp2 = Tree_getLeftmostNode(tdp->tree);
+   			// printf("%s\n", "0000");
+   			Tree_addChild(temp2, Tree_new('e'));
+   			// printf("%s\n", "add succeed");
+   		}
+    }
+    return true;
+}
+
 bool TDP_buildStack(TDP tdp) {
     push(Tree_new('E'));
     while(!isEmpty()) {
     	// printf("%s\n", "line 124");
-    	if (TDP_lookAhead(tdp, '\0')) 
-    		return false;
+    	if (TDP_lookAhead(tdp, '\0')) {
+    		// printf("%s\n", "out of input");
+
+    		clearStack(tdp);
+    		return true;
+    	}
         Tree out = pop();
         // printf("%s\n", "line 128");
         if(isTerminal(out->data)) {
@@ -136,25 +157,27 @@ bool TDP_buildStack(TDP tdp) {
         else {
         	// printf("%s\n", "line 137");
         	// printf("%s\n", "build stack non-term");
-        	if (!TDP_addProduction(tdp, out)) 
+        	if (!TDP_addProduction(tdp, out)) {
+        		// printf("%s\n", "fail production");
         	return false;
         }
+        }
     }
-    if (!TDP_lookAhead(tdp, '\0') ) 
-    	return false;
+    // if (!TDP_lookAhead(tdp, '\0') ) 
+    // 	return false;
     return true;
 }
 
 bool TDP_addProduction(TDP tdp, Tree tree) {
-	printf("Next char: %c\n", *nextInputChar);
+	// printf("Next char: %c\n", *nextInputChar);
 	int production;
 	if(numInput(*nextInputChar) == -1) {
     	production = 0;
   	}
 	production = parseTable[numSynCat(tree->data)][numInput(*nextInputChar)];
-	printf("production: %d\n", production);
+	// printf("production: %d\n", production);
   	if (TDP_buildTree(tdp, production) == NULL) {
-  		printf("%s\n", "build fail");
+  		// printf("%s\n", "build fail");
   		return false;
   	}
   	return true;
@@ -162,6 +185,7 @@ bool TDP_addProduction(TDP tdp, Tree tree) {
 
 Tree TDP_buildTree(TDP tdp, int prod) {
 	Tree tree = Tree_getLeftmostNode(tdp->tree);
+	// printf("%d\n", tree==NULL);
 
 	switch(prod) {
 	case 1:
@@ -195,7 +219,6 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 	case 13:
 		// push(Tree_new('e'));
 		Tree_addChild(tree, Tree_new('e'));
-
 		// printf("%s\n", "prod 4/8/13");
 		break;
 	case 5:
@@ -241,8 +264,9 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 		push(Tree_new('n'));
 		push(Tree_new('D'));
 		Tree_addChild(tree, Tree_new('D'));
+		Tree_addChild(tree, Tree_new('n'));
 		// Tree_addChild(tree, Tree_new('n'));
-		printf("%s\n", "prod 11");
+		// printf("%s\n", "prod 11");
 		break;
 	case 14:
 		push(Tree_new('0'));
@@ -301,7 +325,8 @@ Tree TDP_buildTree(TDP tdp, int prod) {
 	// 	break;
 	default: return NULL;
 	}
-	printf("%s\n", "build yeah");
+	// Tree_print(tdp->tree);
+	// printf("%s\n", "build yeah");
 	
 	return tree;
 }

@@ -15,13 +15,13 @@ double combine (double a, double b) {
 	double n;
 	sprintf(exp, "%.0f%.0f", a, b);
 	n = atof(exp);
-	printf("combine: %f\n", n);
+	// printf("combine: %f\n", n);
 	return n;
 }
 
 double evaluation_tree(Tree tree) {
 	if (tree->data == 'E') {
-		printf("%s\n", "E");
+		// printf("%s\n", "E");
 		return evaluation_tree(tree->leftmostChild);
 		///////////////////////////////
 		// if (tree->leftmostChild->rightSibling->leftmostChild->data == '+') {
@@ -40,7 +40,7 @@ double evaluation_tree(Tree tree) {
 		
 	// }
 	else if (tree->data == 'T') {
-		printf("%s\n", "T");
+		// printf("%s\n", "T");
 		if (tree->rightSibling->leftmostChild->data == '-')
 			return evaluation_tree(tree->leftmostChild)-evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
 		else if (tree->rightSibling->leftmostChild->data == '+')
@@ -63,7 +63,7 @@ double evaluation_tree(Tree tree) {
 	// 	return 0;
 	// }
 	else if (tree->data == 'F') {
-		printf("%s\n", "F");
+		// printf("%s\n", "F");
 		if (tree->leftmostChild->data == '(') {
 			if (tree->rightSibling->leftmostChild->data == '*')
 				return evaluation_tree(tree->leftmostChild->rightSibling)*evaluation_tree(tree->rightSibling->leftmostChild->rightSibling);
@@ -83,12 +83,12 @@ double evaluation_tree(Tree tree) {
 		// return evaluation_tree(tree->leftmostChild);
 	} 
 	else if (tree->data == 'N') {
-		printf("%s\n", "N");
+		// printf("%s\n", "N");
 		return evaluation_tree(tree->leftmostChild);
 		// return combine(evaluation_tree(tree->leftmostChild), evaluation_tree(tree->leftmostChild->rightSibling));
 	}
 	else if (tree->data == 'n') {
-		printf("%s\n", "n");
+		// printf("%s\n", "n");
 	
 		return evaluation_tree(tree->leftmostChild);
 	}

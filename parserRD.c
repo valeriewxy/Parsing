@@ -17,9 +17,6 @@ RDP RDP_new(char* input, int length) {
 
 void RDP_free(RDP rdp) {
 	if (rdp != NULL) {
-		if(rdp->tree != NULL) {
-			Tree_free(rdp->tree);
-		}
 		free(rdp);
 	}
 }
@@ -47,7 +44,7 @@ Tree start(RDP rdp) {
 }
 
 Tree E(RDP rdp) {
-	printf("%s\n", "E");
+	// printf("%s\n", "E");
 	Tree e = Tree_new('E');
 	Tree t = T(rdp);
 	if (t == NULL)
@@ -61,7 +58,7 @@ Tree E(RDP rdp) {
 }
 
 Tree TT(RDP rdp) {
-	printf("%s\n", "TT");
+	// printf("%s\n", "TT");
 	Tree tt = Tree_new('t');
 	char c;
 	if (!(lookAhead(rdp,'+') || lookAhead(rdp,'-'))) {
@@ -85,7 +82,7 @@ Tree TT(RDP rdp) {
 }
 
 Tree T(RDP rdp) {
-	printf("%s\n", "T");
+	// printf("%s\n", "T");
 	Tree t = Tree_new('T');
 	Tree f = F(rdp);
 	if (f == NULL)
@@ -99,13 +96,13 @@ Tree T(RDP rdp) {
 }
 
 Tree FT(RDP rdp) {
-	printf("%s\n", "FT");
+	// printf("%s\n", "FT");
 	Tree ft = Tree_new('f');
 	char c;
 	if (!(lookAhead(rdp,'*') || lookAhead(rdp,'/'))) {
 		Tree_addChild(ft, Tree_new('e'));
 	} else {
-		printf("%s\n", "$$$$");
+		// printf("%s\n", "$$$$");
 		if (lookAhead(rdp,'*')) 
 			c = '*';
 		else if (lookAhead(rdp,'/'))
@@ -119,7 +116,7 @@ Tree FT(RDP rdp) {
 		if (ft2 == NULL) 
 			return NULL;
 		Tree_addChild(ft, Tree_new(c));
-		printf("%c%s\n", c, "$$$$");
+		// printf("%c%s\n", c, "$$$$");
 		Tree_addChild(ft, f);
 		Tree_addChild(ft, ft2);
 	}
@@ -127,7 +124,7 @@ Tree FT(RDP rdp) {
 }
 
 Tree F(RDP rdp) {
-	printf("%s\n", "F");
+	// printf("%s\n", "F");
 	Tree f = Tree_new('F');
 	if (!lookAhead(rdp,'(')) {
 		Tree n = N(rdp);
@@ -150,7 +147,7 @@ Tree F(RDP rdp) {
 }
 
 Tree N(RDP rdp) {
-	printf("%s\n", "N");
+	// printf("%s\n", "N");
 	Tree n = Tree_new('N');
 	Tree d = D(rdp);
 	if (d == NULL)
@@ -164,7 +161,7 @@ Tree N(RDP rdp) {
 }
 
 Tree NT(RDP rdp) {
-	printf("%s\n", "NT");
+	// printf("%s\n", "NT");
 	Tree nt = Tree_new('n');
 	// bool boolean = false;
 	// for (int i=0; i<10; i++) {
@@ -185,17 +182,8 @@ Tree NT(RDP rdp) {
 }
 
 Tree D(RDP rdp) {
-	printf("%s\n", "D");
+	// printf("%s\n", "D");
 	Tree d = Tree_new('D');
-	// int i=0;
-	// for (; i<10; i++) {
-	// 	char c = i;
-	// 	if (lookAhead(rdp,c)) {
-	// 		matchTerminal(rdp, c);
-	// 		Tree_addChild(d, Tree_new(c));
-	// 		return d;
-	// 	}
-	// }
 
 	switch(*nextInputChar) {
 		case '0':
